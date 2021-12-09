@@ -51,7 +51,7 @@
       position="0 0 -5"
       dynamic-body
     ></a-box>
-    <a-box
+    <!-- <a-box
       color="blue"
       scale="5 5 5"
       align="center"
@@ -64,7 +64,7 @@
       align="center"
       gps-entity-place="latitude: 54.2588040565805; longitude: -4.468517303466798;"
       position="0 0 -5"
-    ></a-box>
+    ></a-box> -->
     <!-- <a-gltf-model
       value="Derek Papucho"
       scale="5 5 5"
@@ -86,6 +86,7 @@
         return [lat || 54.2588040565805, lon || -4.468517303466798];
       };
     
+      alert(indow.myPosition()[0], indow.myPosition()[1])
       console.log(window.myPosition());
     }
 
