@@ -18,34 +18,7 @@
         return [lat || 54.2588040565805, lon || -4.468517303466798];
       };
     
-      window.onload = () => {
-        const [latObj, lonObj] = objective();
-        const [latMe, lonMe] = window.myPosition();
-
-        if (lonObj < 0) {
-          console.log("West");
-        } else {
-          console.log("East");
-        }
-
-        if (latObj < 0) {
-          console.log("South");
-        } else {
-          console.log("North");
-        }
-
-        if (lonMe < 0) {
-          console.log("West me");
-        } else {
-          console.log("East me");
-        }
-
-        if (latMe < 0) {
-          console.log("South me");
-        } else {
-          console.log("North me");
-        }
-      };
+      console.log(window.myPosition());
     }
 
     AFRAME.registerComponent("locationme", {
@@ -99,7 +72,7 @@
       color="red"
       scale="5 5 5"
       align="center"
-      gps-entity-place="latitude: 54.259082936285395; longitude: -4.468994736671449;"
+      gps-entity-place="latitude: 4.578848; longitude: -74.135825;"
       position="0 0 -5"
       dynamic-body
     ></a-box>
