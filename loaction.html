@@ -12,41 +12,16 @@
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-  <script>
-    function initializeFollowUp() {
-      const objective = (lat, lon, alt) => {
-        return [lat || 54.2588040565805, lon || -4.468517303466798];
-      };
-    
-      console.log(window.myPosition());
-    }
-
-    AFRAME.registerComponent("locationme", {
-      init: () => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            window.myPosition = () => {
-              return [position.coords.latitude, position.coords.longitude];
-            };
-            initializeFollowUp();
-          },
-          (error) => {
-            console.error(error);
-          }
-        );
-      },
-    });
-  </script>
   <a-scene
     embedded
     arjs="sourceType: webcam;"
     physics="debug: true; restitution: 0.7;"
   >
     <a-camera
-      locationme
       gps-camera
       rotation-reader
     >
+    <!-- ="simulateLatitude: 4.5783461; simulateLongitude: -74.1357291;" -->
       <!-- <a-entity
         position="0 -1 -2"
         scale="0.05 0.05 0.05"
@@ -105,5 +80,28 @@
       position="0 0 -5"
     ></a-text> -->
   </a-scene>
+  <script>
+    function initializeFollowUp() {
+      const objective = (lat, lon, alt) => {
+        return [lat || 54.2588040565805, lon || -4.468517303466798];
+      };
+    
+      console.log(window.myPosition());
+    }
+
+    window.onload = () => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          window.myPosition = () => {
+            return [position.coords.latitude, position.coords.longitude];
+          };
+          initializeFollowUp();
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    };
+  </script>
 </body>
 </html>
