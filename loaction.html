@@ -14,11 +14,30 @@
   <a-scene
     embedded
     arjs="sourceType: webcam;"
+    physics="debug: true"
   >
     <a-camera
       gps-camera="simulateLatitude: 51.507351; simulateLongitude: -0.127758;"
       rotation-reader
-    ></a-camera>
+    >
+      <!-- <a-entity
+        position="0 -1 -2"
+        scale="0.05 0.05 0.05"
+        gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+      ></a-entity> -->
+      <!-- <a-entity
+        position="0 -0.5 -2"
+        scale="0.25 0.25 0.05"
+        gltf-model="./assets/arrow.gltf"
+        dynamic-body
+        material="opacity: 0.5;"
+        rotation="-50 0 0"
+      ></a-entity> -->
+      <a-image
+        src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Blue_Upwards_Arrow.png"
+        position="0 -1 -4"
+      ></a-image>
+    </a-camera>
 
     <a-box
       color="red"
