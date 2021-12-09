@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3Djs</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  </style>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js"></script>
+</head>
+<body style="margin : 0px; overflow: hidden;">
+  <script>
+    //AFRAME.registerComponent("locationfinder", {
+      //init: function() {
+       // navigator.geolocation.getCurrentPosition((position) => {
+          //console.log(position);
+        //});
+      //},
+    //});
+  </script>
+  <a-scene>
+    <a-box position="0 1.5 -6" color="blue"></a-box>
+    <a-box position="-2 3 -6" color="red"></a-box>
+    <a-box
+      position="2 0 -6"
+      color="green"
+      rotation="0 0 0"
+      scale="1 1 5"
+      wireframe="true"
+    ></a-box>
+    <!-- ROTATION: Y X Z(rota sobre su eje), NORMAL: X Y Z -->
+    <a-sphere
+      position="0 0 -8"
+      color="#FFFF00"
+      radius="0.4"
+      scale="1 1 1"
+      rotation="0 0 0"
+    ></a-sphere>
+  </a-scene>
+</body>
+</html>
