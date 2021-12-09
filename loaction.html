@@ -5,19 +5,73 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tiger Test</title>
-  
+
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
+  <script>
+    function initializeFollowUp() {
+      const objective = (lat, lon, alt) => {
+        return [lat || 54.2588040565805, lon || -4.468517303466798];
+      };
+    
+      window.onload = () => {
+        const [latObj, lonObj] = objective();
+        const [latMe, lonMe] = window.myPosition();
+
+        if (lonObj < 0) {
+          console.log("West");
+        } else {
+          console.log("East");
+        }
+
+        if (latObj < 0) {
+          console.log("South");
+        } else {
+          console.log("North");
+        }
+
+        if (lonMe < 0) {
+          console.log("West me");
+        } else {
+          console.log("East me");
+        }
+
+        if (latMe < 0) {
+          console.log("South me");
+        } else {
+          console.log("North me");
+        }
+      };
+    }
+
+    AFRAME.registerComponent("locationme", {
+      init: () => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            window.myPosition = () => {
+              return [position.coords.latitude, position.coords.longitude];
+            };
+            initializeFollowUp();
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      },
+    });
+  </script>
   <a-scene
     embedded
     arjs="sourceType: webcam;"
-    physics="debug: true"
+    physics="debug: true; restitution: 0.7;"
   >
     <a-camera
-      gps-camera="simulateLatitude: 51.507351; simulateLongitude: -0.127758;"
+      locationme
+      gps-camera="simulateLatitude: 54.258995199053516; simulateLongitude: -4.468903541564942; simulateAltitude: 499;"
       rotation-reader
     >
       <!-- <a-entity
@@ -34,8 +88,10 @@
         rotation="-50 0 0"
       ></a-entity> -->
       <a-image
-        src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Blue_Upwards_Arrow.png"
-        position="0 -1 -4"
+        src="./assets/images/blue-arrow-up-md.png"
+        position="0 -0.8 -4"
+        scale="0.5 0.5 0.5"
+        dynamic-body
       ></a-image>
     </a-camera>
 
@@ -43,21 +99,22 @@
       color="red"
       scale="5 5 5"
       align="center"
-      gps-entity-place="latitude: 51.507344; longitude: -0.127664;"
+      gps-entity-place="latitude: 54.259082936285395; longitude: -4.468994736671449;"
       position="0 0 -5"
+      dynamic-body
     ></a-box>
     <a-box
       color="blue"
       scale="5 5 5"
       align="center"
-      gps-entity-place="latitude: 51.507621; longitude: -0.127508;"
+      gps-entity-place="latitude: 54.25925214327682; longitude: -4.468013048171998;"
       position="0 0 -5"
     ></a-box>
     <a-box
       color="green"
       scale="5 5 5"
       align="center"
-      gps-entity-place="latitude: 51.507784; longitude: -0.127948;"
+      gps-entity-place="latitude: 54.2588040565805; longitude: -4.468517303466798;"
       position="0 0 -5"
     ></a-box>
     <!-- <a-gltf-model
