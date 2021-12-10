@@ -28,7 +28,7 @@
       return angle * (180 / Math.PI);
     }
 
-    setTimeout(() => {
+    setInterval(() => {
       navigator.geolocation.getCurrentPosition(function (position) {
         const $content = document.getElementById("content");
         const { latitude, longitude, altitude, altitudeAccuracy } = position.coords;
