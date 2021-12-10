@@ -17,14 +17,18 @@
       let orderLat = latB - latA;
       let orderLon = lonB - lonA;
 
-      return Math.hypot(orderLat, orderLon) * 1000;
+      return Math.hypot(orderLat, orderLon) * 100000;
     }
 
-    function getHeight(orderLat, distance) {
-      return Math.sin(orderLat / distance);
+    function getAngule(orderLat, distance) {
+      return toDegrees(Math.asin(orderLat / distance));
     }
 
-    setInterval(() => {
+    function toDegrees (angle) {
+      return angle * (180 / Math.PI);
+    }
+
+    setTimeout(() => {
       navigator.geolocation.getCurrentPosition(function (position) {
         const $content = document.getElementById("content");
         const { latitude, longitude, altitude, altitudeAccuracy } = position.coords;
@@ -34,12 +38,17 @@
           lonB: -74.12120,
         };
 
+        const orderLat = objective.latB - latitude;
+        const orderLon = objective.lonB - longitude;
+
+        console.log(latitude, longitude);
+
         const distance = getDistance({
           latA: latitude,
           lonA: longitude,
         }, objective);
 
-        console.log(getHeight(6, 8));
+        console.log(orderLat * Math.tan(getAngule(orderLat, distance)));
 
         $content.innerHTML = `
           <p>Your latitude is: ${latitude}</p>
