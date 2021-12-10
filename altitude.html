@@ -11,16 +11,46 @@
     <div id="content"></div>
   </main>
   <script>
+    function initializeFollowUp(pointA, pointB) {
+      const { latA, lonA } = pointA;
+      const { latB, lonB } = pointB;
+      let orderLat = 0;
+      let orderLon = 0;
+
+      if (latA > latB) {
+        orderLat = latA - latB;
+      } else {
+        orderLat = latB - latA;
+      }
+
+      if (lonA > lonB) {
+        orderLon = lonA - lonB;
+      } else {
+        orderLon = lonB - lonA;
+      }
+
+      return Math.sqrt((orderLat ** 2) + (orderLon ** 2));
+    }
+
     setInterval(() => {
       navigator.geolocation.getCurrentPosition(function (position) {
         const $content = document.getElementById("content");
         const { latitude, longitude, altitude, altitudeAccuracy } = position.coords;
+
+        const followUp = initializeFollowUp({
+          latA: latitude,
+          lonA: longitude,
+        }, {
+          latB: 4.57917,
+          lonB: -74.12120,
+        });
 
         $content.innerHTML = `
           <p>Your latitude is: ${latitude}</p>
           <p>Your longitude is: ${longitude}</p>
           <p>Your altitude is: ${altitude}</p>
           <p>The latitude acurrency is: ${altitudeAccuracy}%</p>
+          <p>Your destiny is on: ${followUp}</p>
         `;
       });
     }, 400);
