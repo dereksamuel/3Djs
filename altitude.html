@@ -14,11 +14,13 @@
     setInterval(() => {
       navigator.geolocation.getCurrentPosition(function (position) {
         const $content = document.getElementById("content");
+        const { latitude, longitude, altitude, altitudeAccuracy } = position.coords;
 
         $content.innerHTML = `
-          <p>Your latitude is: ${position.coords.latitude}</p>
-          <p>Your longitude is: ${position.coords.longitude}</p>
-          <p>Your altitude is: ${position.coords.altitude}</p>
+          <p>Your latitude is: ${latitude}</p>
+          <p>Your longitude is: ${longitude}</p>
+          <p>Your altitude is: ${altitude}</p>
+          <p>The latitude acurrency is: ${altitudeAccuracy}%</p>
         `;
       });
     }, 1000);
