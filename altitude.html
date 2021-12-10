@@ -41,8 +41,8 @@
         orderLon = lonB - lonA;
       }
 
-      //return Math.sqrt((orderLat ** 2) + (orderLon ** 2));
-      return measure(latA, lonA, latB, lonB);
+      return (Math.sqrt((orderLat ** 2) + (orderLon ** 2))) * 1000;
+      //return measure(latA, lonA, latB, lonB);
     }
 
     setInterval(() => {
