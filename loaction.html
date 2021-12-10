@@ -12,7 +12,7 @@
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-  <a-scene
+  <!-- <a-scene
     embedded
     arjs="sourceType: webcam;"
     physics="debug: true; restitution: 0.7;"
@@ -35,7 +35,7 @@
         material="opacity: 0.5;"
         rotation="-50 0 0"
       ></a-entity> -->
-      <a-image
+      <!-- <a-image
         src="./assets/images/blue-arrow-up-md.png"
         position="0 -0.8 -4"
         scale="0.5 0.5 0.5"
@@ -45,8 +45,8 @@
 
     <a-box
       material="color: yellow"
-      gps-entity-place="latitude: 4.1; longitude: -74.1357291;"
-    />
+      gps-entity-place="latitude: 4.1; longitude: -0.2;"
+    /> -->
     <!-- <a-box
       color="blue"
       scale="5 5 5"
@@ -75,6 +75,21 @@
       gps-entity-place="latitude: 51.507799999; longitude: -0.127799;"
       position="0 0 -5"
     ></a-text> -->
+  <!-- </a-scene> -->
+  <a-scene vr-mode-ui="enabled: false">
+    <a-entity id="wrapper" position="0 -8 0">
+  
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
+      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
+      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
+      <a-plane position="0 0 -5.0" rotation="-90 0 0" width="7" height="7" color="#7BC8A4" shadow></a-plane>
+  
+      <a-text id="welcome" value="Welcome" scale="75 75 75" color="#000000" position="-30 0 -150"></a-text>
+      <!-- look-at="[gps-camera]" -->
+  
+    </a-entity><!-- /wrapper -->
+  
+    <a-camera camera="fov: 60;" gps-camera rotation-reader></a-camera>
   </a-scene>
   <script>
     function initializeFollowUp() {
@@ -85,18 +100,24 @@
       console.log(window.myPosition());
     }
 
+    const log = console.log;
     window.onload = () => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          window.myPosition = () => {
-            return [position.coords.latitude, position.coords.longitude];
-          };
-          initializeFollowUp();
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+      let scene = document.querySelector('a-scene'); /* Apply to whole scene */
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          let gps = document.createAttribute('gps-entity-place'),
+            arjs = document.createAttribute('arjs'),
+            welcome = document.getElementById('welcome');
+
+          arjs.value = 'sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; trackingMethod: best; debugUIEnabled: false;';
+          gps.value = `latitude: ${position.coords.latitude - 0.001}; longitude: ${position.coords.longitude + 0.001}`;
+          console.log(gps.value, arjs);
+          scene.setAttributeNode(gps); /* Apply to whole scene */
+          scene.setAttributeNode(arjs);
+        });
+      }
+
     };
   </script>
 </body>
