@@ -21,25 +21,22 @@ window.onload = async () => {
     (function drawVideo() {
       const pixels = ctx.getImageData(0, 0, $canvas.width, $canvas.height); // no cambia
       const pixelsData = pixels.data;
-      let mappedImage = [];
 
       if (!target.paused && !target.ended) {
-        for (let i = 0; i < pixelsData.length; i+= 4) {
-          pixelsData[i + 0] = ((pixelsData[i] + pixelsData[i + 1] + pixelsData[i + 2]) / 3) + 100;
-          pixelsData[i + 1] = ((pixelsData[i] + pixelsData[i + 1] + pixelsData[i + 2]) / 3) + 10;
-          pixelsData[i + 2] = ((pixelsData[i] + pixelsData[i + 1] + pixelsData[i + 2]) / 3) + 10;
-
-          // if (green > 100 && red > 100 && blue < 100) {
-          //   // pixelsData[i + 1] = 255
-          //   // pixelsData[i + 3] = 1;
-          // }
-        }
-
         ctx.drawImage(target, 0, 0, $canvas.width, $canvas.height);
 
         ctx2.putImageData(pixels, 0, 0);
         requestAnimationFrame(drawVideo);
       }
     })();
+    ctx.drawImage(target, 0, 0, $canvas.width, $canvas.height);
   });
 };
+
+function calculateBrightness(red, green, blue) {
+  return Math.sqrt(
+    (red * red) * 0.299 +
+    (green * green) * 0.587 +
+    (blue * blue) * 0.114
+  ) / 100;
+}

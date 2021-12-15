@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <script type="module">
+    import * as THREE from "https://cdn.skypack.dev/three@latest";
+    import { OrbitControls } from 'https://cdn.skypack.dev/three@latest/examples/jsm/controls/OrbitControls.js';
+
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+
+    const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+    const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+    const sphere = new THREE.Mesh( geometry, material );
+    scene.add(sphere);
+
+    camera.position.z = 1;
+    camera.lookAt(camera.position);
+    renderer.render(scene, camera);
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      sphere.rotation.x += 0.01;
+      sphere.rotation.y += 0.01;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
