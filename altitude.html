@@ -5,62 +5,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js"></script>
+  <style>
+    .parent {
+      position: relative;
+      width: 1024px;
+      height: 768px;
+    }
+    #monitor, #mainCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #monitor {
+      transform: scaleX(-1);
+    }
+    video {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
 <body>
+  <!-- <div class="parent">
+    <div id="monitor"></div>
+    <div id="mainCanvas"></div>
+  </div>
+  <video autoplay></video> -->
   <main>
     <div id="content"></div>
   </main>
-  <script>
-    function getDistance(pointA, pointB) {
-      const { latA, lonA } = pointA;
-      const { latB, lonB } = pointB;
-      let orderLat = latB - latA;
-      let orderLon = lonB - lonA;
-
-      return Math.hypot(orderLat, orderLon) * 100000;
-    }
-
-    function getAngule(orderLat, distance) {
-      return toDegrees(Math.asin(orderLat / distance));
-    }
-
-    function toDegrees (angle) {
-      return angle * (180 / Math.PI);
-    }
-
-    setInterval(() => {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        const $content = document.getElementById("content");
-        const { latitude, longitude, altitude, altitudeAccuracy } = position.coords;
-
-        const objective = {
-          latB: 4.57976,
-          lonB: -74.12093,
-        };
-
-        const orderLat = objective.latB - latitude;
-        const orderLon = objective.lonB - longitude;
-
-        console.log(latitude, longitude);
-
-        const distance = getDistance({
-          latA: latitude,
-          lonA: longitude,
-        }, objective);
-
-        console.log(orderLat * Math.tan(getAngule(orderLat, distance)));
-
-        $content.innerHTML = `
-          <p>Your latitude is: ${latitude}</p>
-          <p>Your longitude is: ${longitude}</p>
-          <p>Your altitude is: ${altitude}</p>
-          <p>The latitude acurrency is: ${altitudeAccuracy}%</p>
-          <p>Your destiny is on: ${distance}m</p>
-        `;
-      }, (error) => {
-        console.error(error);
-      });
-    }, 400);
-  </script>
+  <a-scene>
+  </a-scene>
+  <script type="module" src="./altitude.js"></script>
 </body>
 </html>
